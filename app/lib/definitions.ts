@@ -4,4 +4,5 @@ export type TodoTypes = {
 	completed: boolean;
 	createdAt: Date;
 	updatedAt: Date;
+	toggleTodo: (id: string, completed: boolean) => void;
 };

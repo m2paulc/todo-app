@@ -1,13 +1,23 @@
+"use client";
+
 import { TodoTypes } from "../lib/definitions";
 
-export default function TodoItem({ id, task, completed }: TodoTypes) {
+export default function TodoItem({
+	id,
+	task,
+	completed,
+	toggleTodo,
+}: TodoTypes) {
 	return (
 		<li key={id} className="flex items-center space-x-3">
 			<input
 				id={id}
 				type="checkbox"
 				className="w-4 h-4 cursor-pointer peer"
-				// checked={completed}
+				defaultChecked={completed}
+				onChange={(event) => {
+					toggleTodo(id, event.target.checked);
+				}}
 			/>
 			<label
 				htmlFor={id}

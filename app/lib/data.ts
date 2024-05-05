@@ -1,5 +1,5 @@
 import prisma from "@/db";
-import { unstable_noStore as noStore } from "next/cache";
+import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function getTodos() {
@@ -33,4 +33,17 @@ export async function createTodo(data: FormData) {
 		throw new Error("Failed to create todo");
 	}
 	redirect("/dashboard/task");
+}
+
+export async function toggleTodo(id: string, completed: boolean) {
+	"use server";
+	noStore();
+	try {
+		console.log("Toggle Task...");
+		await prisma.todo.update({ where: { id }, data: { completed } });
+	} catch (error) {
+		console.error(error);
+		throw new Error("Toggle Task not completed.");
+	}
+	revalidatePath("/dashboard/task");
 }

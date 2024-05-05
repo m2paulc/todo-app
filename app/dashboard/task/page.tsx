@@ -1,9 +1,10 @@
 import TodoItem from "@/app/components/TodoItem";
-import { getTodos } from "@/app/lib/data";
+import { getTodos, toggleTodo } from "@/app/lib/data";
 import Link from "next/link";
 
 async function Page() {
 	const todos = await getTodos();
+
 	return (
 		<>
 			<header className="flex justify-between items-center mb-10">
@@ -17,7 +18,7 @@ async function Page() {
 			</header>
 			<ul>
 				{todos.map((todo) => (
-					<TodoItem key={todo.id} {...todo} />
+					<TodoItem key={todo.id} {...todo} toggleTodo={toggleTodo} />
 				))}
 			</ul>
 		</>
